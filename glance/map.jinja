@@ -4,10 +4,32 @@
         'pkgs': ['glance', 'glance-api', 'glance-registry', 'glance-common', 'python-glance', 'python-glance-store', 'python-glanceclient'],
         'services': ['glance-api', 'glance-registry'],
         'notification': False,
+        'group': {
+          'name': 'glance',
+          'gid': '302',
+        },
+        'user': {
+          'username': 'glance',
+          'uid': '302',
+          'home': '/var/lib/glance',
+          'shell': '/bin/false',
+          'fullname': 'OpenStack Glance Daemons',
+        },
     },
     'RedHat': {
-        'pkgs': ['openstack-glance', 'python-glanceclient'],
+        'pkgs': ['openstack-glance', 'python-glanceclient', 'python-openstackclient'],
         'services': ['openstack-glance-api', 'openstack-glance-registry'],
         'notification': False,
+        'group': {
+          'name': 'glance',
+          'gid': '161',
+        },
+        'user': {
+          'name': 'glance',
+          'uid': '161',
+          'home': '/var/lib/glance',
+          'shell': '/sbin/nologin',
+          'fullname': 'OpenStack Glance Daemons',
+        },
     },
 }, merge=salt['pillar.get']('glance:server')) %}

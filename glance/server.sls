@@ -5,22 +5,23 @@ glance_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
-{%- if not salt['user.info']('glance') %}
+{%- if not salt['user.info'](server.user.name) %}
 glance_user:
   user.present:
-    - name: glance
-    - home: /var/lib/glance
-    - uid: 302
-    - gid: 302
-    - shell: /bin/false
+    - name: {{server.user.name}}
+    - home: {{server.user.home}}
+    - uid: {{server.user.uid}}
+    - gid: {{server.group.gid}}
+    - shell: {{server.user.shell}}
+    - fullname: {{server.user.fullname}}
     - system: True
     - require_in:
       - pkg: glance_packages
 
 glance_group:
   group.present:
-    - name: glance
-    - gid: 302
+    - name: {{server.group.name}}
+    - gid: {{server.group.gid}}
     - system: True
     - require_in:
       - pkg: glance_packages
