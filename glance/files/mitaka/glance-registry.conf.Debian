@@ -497,16 +497,22 @@ max_overflow = 30
 # sheepdog, swift, s3, vsphere (list value)
 #stores = file,http
 {%- if server.storage.engine == 'file' %}
-default_store = file
 stores = file,http
-{%- else %}
-default_store = {{ server.storage.engine }}
-stores = {{ server.storage.engine }}
-{%- endif %}
+
 # Default scheme to use to store image data. The scheme must be
 # registered by one of the stores defined by the 'stores' config
 # option. (string value)
 #default_store = file
+default_store = file
+{%- else %}
+stores = {{ server.storage.engine }}
+
+# Default scheme to use to store image data. The scheme must be
+# registered by one of the stores defined by the 'stores' config
+# option. (string value)
+#default_store = file
+default_store = {{ server.storage.engine }}
+{%- endif %}
 
 # Minimum interval seconds to execute updating dynamic storage
 # capabilities based on backend status then. It's not a periodic
