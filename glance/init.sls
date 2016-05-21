@@ -1,6 +1,6 @@
-
+{%- from "glance/map.jinja" import server with context %}
 include:
-{%- if pillar.glance.server.enabled %}
+{%- if server.enabled %}
 - glance.server
 - glance.deploy
 
