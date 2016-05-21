@@ -861,9 +861,6 @@ password = {{ server.identity.password }}
 auth_uri=http://{{ server.identity.host }}:5000
 auth_url=http://{{ server.identity.host }}:35357
 
-{%- if server.cache is defined %}
-memcached_servers={%- for member in server.cache.members %}{{ member.host }}:11211{% if not loop.last %},{% endif %}{%- endfor %}
-{%- endif %}
 #
 # From keystonemiddleware.auth_token
 #
@@ -916,6 +913,9 @@ memcached_servers={%- for member in server.cache.members %}{{ member.host }}:112
 # value)
 # Deprecated group/name - [DEFAULT]/memcache_servers
 #memcached_servers = <None>
+{%- if server.cache is defined %}
+memcached_servers={%- for member in server.cache.members %}{{ member.host }}:11211{% if not loop.last %},{% endif %}{%- endfor %}
+{%- endif %}
 
 # In order to prevent excessive effort spent validating tokens, the
 # middleware caches previously-seen tokens for a configurable duration
