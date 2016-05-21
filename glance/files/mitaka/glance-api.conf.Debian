@@ -54,10 +54,12 @@
 # Default value for the number of items returned by a request if not
 # specified explicitly in the request (integer value)
 #limit_param_default = 25
+limit_param_default = 25
 
 # Maximum permissible number of items that could be returned by a
 # request (integer value)
 #api_limit_max = 1000
+api_limit_max = 1000
 
 # Whether to include the backend image storage location in image
 # properties. Revealing storage location can be a security risk, so
@@ -686,6 +688,7 @@ idle_timeout = 3600
 # Deprecated group/name - [DEFAULT]/sql_max_pool_size
 # Deprecated group/name - [DATABASE]/sql_max_pool_size
 #max_pool_size = <None>
+max_pool_size = 10
 
 # Maximum number of database connection retries during startup. Set to
 # -1 to specify an infinite retry count. (integer value)
@@ -1154,7 +1157,6 @@ username = {{ server.identity.user }}
 password = {{ server.identity.password }}
 auth_uri=http://{{ server.identity.host }}:5000
 auth_url=http://{{ server.identity.host }}:35357
-
 
 #
 # From keystonemiddleware.auth_token

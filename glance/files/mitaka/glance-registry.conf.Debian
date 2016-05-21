@@ -59,6 +59,7 @@ api_limit_max = 1000
 # properties. Revealing storage location can be a security risk, so
 # use this setting with caution! (boolean value)
 #show_image_direct_url = false
+show_image_direct_url = true
 
 # Whether to include the backend image locations in image properties.
 # For example, if using the file system store a URL of
@@ -495,7 +496,13 @@ max_overflow = 30
 # List of stores enabled. Valid stores are: cinder, file, http, rbd,
 # sheepdog, swift, s3, vsphere (list value)
 #stores = file,http
-
+{%- if server.storage.engine == 'file' %}
+default_store = file
+stores = file,http
+{%- else %}
+default_store = {{ server.storage.engine }}
+stores = {{ server.storage.engine }}
+{%- endif %}
 # Default scheme to use to store image data. The scheme must be
 # registered by one of the stores defined by the 'stores' config
 # option. (string value)
@@ -641,29 +648,35 @@ max_overflow = 30
 # The config file that has the swift account(s)configs. (string value)
 #swift_store_config_file = <None>
 
+{%- if server.storage.engine == 'rbd' %}
 # RADOS images will be chunked into objects of this size (in
 # megabytes). For best performance, this should be a power of two.
 # (integer value)
 #rbd_store_chunk_size = 8
+rbd_store_chunk_size = {{ server.storage.chunk_size }}
 
 # RADOS pool in which images are stored. (string value)
 #rbd_store_pool = images
+rbd_store_pool = {{ server.storage.pool }}
 
 # RADOS user to authenticate as (only applicable if using Cephx. If
 # <None>, a default will be chosen based on the client. section in
 # rbd_store_ceph_conf) (string value)
 #rbd_store_user = <None>
+rbd_store_user = {{ server.storage.user }}
 
 # Ceph configuration file path. If <None>, librados will locate the
 # default config. If using cephx authentication, this file should
 # include a reference to the right keyring in a client.<USER> section
 # (string value)
 #rbd_store_ceph_conf = /etc/ceph/ceph.conf
+rbd_store_ceph_conf = /etc/ceph/ceph.conf
 
 # Timeout value (in seconds) used when connecting to ceph cluster. If
 # value <= 0, no timeout is set and default librados value is used.
 # (integer value)
 #rados_connect_timeout = 0
+{%- endif %}
 
 # Info to match when looking for cinder in the service catalog. Format
 # is : separated values of the form:
@@ -782,6 +795,7 @@ cinder_os_region_name = {{ server.identity.region }}
 # Directory to which the Filesystem backend store writes images.
 # (string value)
 #filesystem_store_datadir = /var/lib/glance/images
+filesystem_store_datadir=/var/lib/glance/images/
 
 # List of directories and its priorities to which the Filesystem
 # backend store writes images. (multi valued)
