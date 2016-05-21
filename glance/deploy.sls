@@ -52,6 +52,8 @@ glance_install_image_{{ image_name }}:
 
 {%- endfor %}
 
+{%- endif %}
+
 {%- if server.policy is defined %}
 
 {%- for key, policy in server.policy.iteritems() %}
@@ -69,4 +71,8 @@ policy_{{ key }}:
 
 {%- endif %}
 
-{%- endif %}
+keytone_deploy__empty_sls_prevent_error:
+  cmd.run:
+    - name: true
+    - unless: true
+
