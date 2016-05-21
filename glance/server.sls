@@ -28,6 +28,15 @@ glance_group:
       - user: glance_user
 {%- endif %}
 
+{%- if server.get('storage').get('engine') in ['rbd'] %}
+/etc/ceph/ceph.client.{{server.storage.user|default('glance')}}.keyring:
+  file.managed:
+    - group: {{server.group.name}}
+    - mode: "0660"
+    - require_in:
+      - file: /etc/glance/glance-api.conf
+{%- endif %}
+
 /etc/glance/glance-cache.conf:
   file.managed:
   - source: salt://glance/files/{{ server.version }}/glance-cache.conf.{{ grains.os_family }}
