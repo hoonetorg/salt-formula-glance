@@ -364,7 +364,7 @@ log_file = /var/log/glance/registry.log
 # overridden by an exchange name specified in the transport_url
 # option. (string value)
 #control_exchange = openstack
-
+control_exchange = openstack
 
 [database]
 
