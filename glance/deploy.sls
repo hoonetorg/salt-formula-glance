@@ -1,7 +1,7 @@
 {%- from "glance/map.jinja" import server with context %}
 {%- if server.enabled %}
 
-{%- if server.images %}
+{%- if server.get('images', False) %}
 /var/lib/glance/images:
   file.directory:
   - mode: 755
