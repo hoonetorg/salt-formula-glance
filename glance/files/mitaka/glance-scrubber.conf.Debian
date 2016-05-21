@@ -31,15 +31,18 @@
 # Default value for the number of items returned by a request if not
 # specified explicitly in the request (integer value)
 #limit_param_default = 25
+limit_param_default = 25
 
 # Maximum permissible number of items that could be returned by a
 # request (integer value)
 #api_limit_max = 1000
+api_limit_max = 1000
 
 # Whether to include the backend image storage location in image
 # properties. Revealing storage location can be a security risk, so
 # use this setting with caution! (boolean value)
 #show_image_direct_url = false
+show_image_direct_url = true
 
 # Whether to include the backend image locations in image properties.
 # For example, if using the file system store a URL of
@@ -136,7 +139,7 @@ wakeup_time = 300
 # and run scrub on wakeup_time interval as specified in the config.
 # (boolean value)
 #daemon = false
-daemon = False
+daemon = false
 
 # The protocol to use for communication with the registry server.
 # Either http or https. (string value)
@@ -245,6 +248,9 @@ daemon = False
 # read OSSN-0060. Related functionality with uploading big images has
 # been implemented with Keystone trusts support.
 #auth_region = <None>
+{%- if server.identity.region is defined %}
+auth_region = {{ server.identity.region }}
+{%- endif %}
 
 # Address to find the registry server. (string value)
 #registry_host = 0.0.0.0
@@ -263,6 +269,7 @@ registry_port = 9191
 # If set to true, the logging level will be set to DEBUG instead of
 # the default INFO level. (boolean value)
 #debug = false
+debug = {{server.debug|default('false')}}
 
 # If set to false, the logging level will be set to WARNING instead of
 # the default INFO level. (boolean value)
@@ -372,6 +379,7 @@ log_file = /var/log/glance/scrubber.log
 # The back end to use for the database. (string value)
 # Deprecated group/name - [DEFAULT]/db_backend
 #backend = sqlalchemy
+backend = sqlalchemy
 
 # The SQLAlchemy connection string to use to connect to the database.
 # (string value)
@@ -379,6 +387,7 @@ log_file = /var/log/glance/scrubber.log
 # Deprecated group/name - [DATABASE]/sql_connection
 # Deprecated group/name - [sql]/connection
 #connection = <None>
+connection = {{ server.database.engine }}://{{ server.database.user }}:{{ server.database.password }}@{{ server.database.host }}/{{ server.database.name }}
 
 # The SQLAlchemy connection string to use to connect to the slave
 # database. (string value)
@@ -395,6 +404,7 @@ log_file = /var/log/glance/scrubber.log
 # Deprecated group/name - [DATABASE]/sql_idle_timeout
 # Deprecated group/name - [sql]/idle_timeout
 #idle_timeout = 3600
+idle_timeout = 3600
 
 # Minimum number of SQL connections to keep open in a pool. (integer
 # value)
@@ -407,12 +417,14 @@ log_file = /var/log/glance/scrubber.log
 # Deprecated group/name - [DEFAULT]/sql_max_pool_size
 # Deprecated group/name - [DATABASE]/sql_max_pool_size
 #max_pool_size = <None>
+max_pool_size = 10
 
 # Maximum number of database connection retries during startup. Set to
 # -1 to specify an infinite retry count. (integer value)
 # Deprecated group/name - [DEFAULT]/sql_max_retries
 # Deprecated group/name - [DATABASE]/sql_max_retries
 #max_retries = 10
+max_retries = -1
 
 # Interval between retries of opening a SQL connection. (integer
 # value)
@@ -425,6 +437,7 @@ log_file = /var/log/glance/scrubber.log
 # Deprecated group/name - [DEFAULT]/sql_max_overflow
 # Deprecated group/name - [DATABASE]/sqlalchemy_max_overflow
 #max_overflow = 50
+max_overflow = 30
 
 # Verbosity of SQL debugging information: 0=None, 100=Everything.
 # (integer value)
