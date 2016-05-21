@@ -144,6 +144,7 @@ daemon = false
 # The protocol to use for communication with the registry server.
 # Either http or https. (string value)
 #registry_client_protocol = http
+registry_client_protocol = http
 
 # The path to the key file to use in SSL connections to the registry
 # server, if any. Alternately, you may set the GLANCE_CLIENT_KEY_FILE
@@ -260,7 +261,7 @@ registry_host = {{ server.registry.host }}
 # Minimum value: 0
 # Maximum value: 65535
 #registry_port = 9191
-registry_port = 9191
+registry_port = {{ server.registry.port }}
 
 #
 # From oslo.log
