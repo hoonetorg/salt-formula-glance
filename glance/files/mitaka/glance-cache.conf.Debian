@@ -111,27 +111,37 @@
 # beyond which the cache pruner, if running, starts cleaning the image
 # cache. (integer value)
 #image_cache_max_size = 10737418240
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
 image_cache_max_size = 5368709120
+{%- endif %}
 
 # The amount of time to let an incomplete image remain in the cache,
 # before the cache cleaner, if running, will remove the incomplete
 # image. (integer value)
 #image_cache_stall_time = 86400
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
 image_cache_stall_time = 86400
+{%- endif %}
 
 # Base directory that the image cache uses. (string value)
 #image_cache_dir = <None>
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
 image_cache_dir = /var/lib/glance/image-cache/
+{%- endif %}
 
 # Address to find the registry server. (string value)
 #registry_host = 0.0.0.0
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
 registry_host = {{ server.registry.host }}
+{%- endif %}
 
 # Port the registry server is listening on. (port value)
 # Minimum value: 0
 # Maximum value: 65535
 #registry_port = 9191
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
 registry_port = {{ server.registry.port }}
+{%- endif %}
 
 # Whether to pass through the user token when making requests to the
 # registry. To prevent failures with token expiration during big files
@@ -243,7 +253,9 @@ registry_port = {{ server.registry.port }}
 # option is ignored if log_config_append is set. (string value)
 # Deprecated group/name - [DEFAULT]/logfile
 #log_file = <None>
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
 log_file = /var/log/glance/image-cache.log
+{%- endif %}
 
 # (Optional) The base directory used for relative log_file  paths.
 # This option is ignored if log_config_append is set. (string value)

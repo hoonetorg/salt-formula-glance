@@ -218,15 +218,23 @@ backlog = 4096
 # beyond which the cache pruner, if running, starts cleaning the image
 # cache. (integer value)
 #image_cache_max_size = 10737418240
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
+image_cache_max_size = 5368709120
+{%- endif %}
 
 # The amount of time to let an incomplete image remain in the cache,
 # before the cache cleaner, if running, will remove the incomplete
 # image. (integer value)
 #image_cache_stall_time = 86400
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
+image_cache_stall_time = 86400
+{%- endif %}
 
 # Base directory that the image cache uses. (string value)
 #image_cache_dir = <None>
+{%- if server.get('storage').get('engine') not in  ['rbd'] %}
 image_cache_dir = /var/lib/glance/image-cache/
+{%- endif %}
 
 # Default publisher_id for outgoing notifications. (string value)
 #default_publisher_id = image.localhost
