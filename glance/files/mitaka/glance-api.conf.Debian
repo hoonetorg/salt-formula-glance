@@ -1165,14 +1165,11 @@ filesystem_store_datadir=/var/lib/glance/images/
 
 
 [keystone_authtoken]
-revocation_cache_time = 10
-auth_type = password
 user_domain_id = {{ server.identity.get('domain', 'default') }}
 project_domain_id = {{ server.identity.get('domain', 'default') }}
 project_name = {{ server.identity.tenant }}
 username = {{ server.identity.user }}
 password = {{ server.identity.password }}
-auth_uri=http://{{ server.identity.host }}:5000
 auth_url=http://{{ server.identity.host }}:35357
 
 #
@@ -1181,6 +1178,7 @@ auth_url=http://{{ server.identity.host }}:35357
 
 # Complete public Identity API endpoint. (string value)
 #auth_uri = <None>
+auth_uri=http://{{ server.identity.host }}:5000
 
 # API version of the admin Identity API endpoint. (string value)
 #auth_version = <None>
@@ -1242,6 +1240,7 @@ memcached_servers={%- for member in server.cache.members %}{{ member.host }}:112
 # revocation events combined with a low cache duration may
 # significantly reduce performance. (integer value)
 #revocation_cache_time = 10
+revocation_cache_time = 10
 
 # (Optional) If defined, indicate whether token data should be
 # authenticated or authenticated and encrypted. If MAC, token data is
@@ -1314,6 +1313,7 @@ memcached_servers={%- for member in server.cache.members %}{{ member.host }}:112
 # Authentication type to load (unknown value)
 # Deprecated group/name - [DEFAULT]/auth_plugin
 #auth_type = <None>
+auth_type = password
 
 # Config Section from which to load plugin specific options (unknown
 # value)
