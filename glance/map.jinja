@@ -1,5 +1,6 @@
+{% import_yaml 'glance/defaults_server.yaml' as server %}
 
-{% set server = salt['grains.filter_by']({
+{% set os_server = salt['grains.filter_by']({
     'Debian': {
         'pkgs': ['glance', 'glance-api', 'glance-registry', 'glance-common', 'python-glance', 'python-glance-store', 'python-glanceclient'],
         'services': ['glance-api', 'glance-registry'],
@@ -33,3 +34,5 @@
         },
     },
 }, merge=salt['pillar.get']('glance:server')) %}
+
+{% do server.update(os_server) %}
