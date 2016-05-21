@@ -222,7 +222,6 @@ registry_port = {{ server.registry.port }}
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #verbose = true
-verbose = true
 
 # The name of a logging configuration file. This file is appended to
 # any existing logging configuration files. For details about logging

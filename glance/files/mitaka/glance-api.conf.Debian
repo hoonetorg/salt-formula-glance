@@ -389,14 +389,13 @@ registry_client_protocol = http
 # If set to true, the logging level will be set to DEBUG instead of
 # the default INFO level. (boolean value)
 #debug = false
-debug = false
+debug = {{server.debug|default('false')}}
 
 # If set to false, the logging level will be set to WARNING instead of
 # the default INFO level. (boolean value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #verbose = true
-verbose = true
 
 # The name of a logging configuration file. This file is appended to
 # any existing logging configuration files. For details about logging
@@ -1557,6 +1556,9 @@ rabbit_virtual_host = {{ server.message_queue.virtual_host }}
 # mode": "all"}' " (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_ha_queues
 #rabbit_ha_queues = false
+{%- if server.get("message_queue", {}).get("ha_queues") %}
+rabbit_ha_queues = {{ server.message_queue.ha_queues }}
+{%- endif %}
 
 # Positive integer representing duration in seconds for queue TTL
 # (x-expires). Queues which are unused for the duration of the TTL are
