@@ -1273,10 +1273,12 @@ rabbit_ha_queues = {{ server.message_queue.ha_queues }}
 # if heartbeat's keep-alive fails (0 disable the heartbeat).
 # EXPERIMENTAL (integer value)
 #heartbeat_timeout_threshold = 60
+heartbeat_timeout_threshold = {{ server.message_queue.heartbeat_timeout_threshold|default('60') }}
 
 # How often times during the heartbeat_timeout_threshold we check the
 # heartbeat. (integer value)
 #heartbeat_rate = 2
+heartbeat_rate = {{ server.message_queue.heartbeat_rate|default('2') }}
 
 # Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake
 # (boolean value)
