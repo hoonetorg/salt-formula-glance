@@ -7,8 +7,6 @@
   - mode: 755
   - user: glance
   - group: glance
-  - require:
-    - service: glance_services
 
 {%- for image in server.get('images', []) %}
 
@@ -20,6 +18,7 @@ glance_download_{{ image.name }}:
   - require:
     - file: /var/lib/glance/images
 
+#FIXME: openstack image create "Cirros 0.3.4" --file cirros-0.3.4-x86_64-disk.raw --disk-format raw --container-format bare --public --property hw_scsi_model=virtio-scsi --property hw_disk_bus=scsi --property hw_qemu_guest_agent=yes --property os_require_quiesce=yes
 glance_install_{{ image.name }}:
   cmd.wait:
   - name: source /root/keystonerc; glance image-create --name '{{ image.name }}' --is-public {{ image.public }} --container-format bare --disk-format {{ image.format }} < {{ image.file }}
