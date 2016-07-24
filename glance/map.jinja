@@ -2,7 +2,7 @@
 
 {% set os_server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['glance', 'glance-api', 'glance-registry', 'glance-common', 'python-glance', 'python-glance-store', 'python-glanceclient'],
+        'pkgs': ['glance', 'glance-api', 'glance-registry', 'glance-common', 'python-glance', 'python-glance-store', 'python-glanceclient', 'python-memcache', 'python-openstackclient'],
         'services': ['glance-api', 'glance-registry'],
         'notification': False,
         'group': {
@@ -18,7 +18,7 @@
         },
     },
     'RedHat': {
-        'pkgs': ['openstack-glance', 'python-glanceclient', 'python-openstackclient'],
+        'pkgs': ['openstack-glance', 'python-glanceclient', 'python-memcached', 'python-openstackclient'],
         'services': ['openstack-glance-api', 'openstack-glance-registry'],
         'notification': False,
         'group': {
