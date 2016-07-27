@@ -70,8 +70,7 @@ policy_{{ key }}:
 
 {%- endif %}
 
-keytone_deploy__empty_sls_prevent_error:
+glance_deploy__empty_sls_prevent_error:
   cmd.run:
     - name: true
     - unless: true
-

@@ -52,7 +52,7 @@ glance_pcs__cib_pushed_{{pcs.glance_cib}}:
     - cibname: {{pcs.glance_cib}}
 {% endif %}
 
-keytone_pcs__empty_sls_prevent_error:
+glance_pcs__empty_sls_prevent_error:
   cmd.run:
     - name: true
     - unless: true
